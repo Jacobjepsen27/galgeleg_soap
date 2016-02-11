@@ -48,7 +48,7 @@ public class Client {
     }
 //    spil.gætBogstav("e");
 //    spil.logStatus();
-///
+/// hejsa
 //    spil.gætBogstav("a");
 //    spil.logStatus();
 //    System.out.println("" + spil.getAntalForkerteBogstaver());
