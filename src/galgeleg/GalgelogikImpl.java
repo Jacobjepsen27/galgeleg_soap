@@ -4,12 +4,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
+import javax.jws.WebService;
 
-public class Galgelogik {
+@WebService(endpointInterface = "galgeleg.GalgelogikI")
+
+//RMI extender UnicastRemoteObject
+public class GalgelogikImpl implements GalgelogikI {
   private ArrayList<String> muligeOrd = new ArrayList<String>();
   private String ordet;
   private ArrayList<String> brugteBogstaver = new ArrayList<String>();
@@ -53,7 +58,7 @@ public class Galgelogik {
   }
 
 
-  public Galgelogik() {
+  public GalgelogikImpl() throws java.rmi.RemoteException{
     muligeOrd.add("bil");
     muligeOrd.add("computer");
     muligeOrd.add("programmering");
@@ -75,7 +80,7 @@ public class Galgelogik {
   }
 
 
-  private void opdaterSynligtOrd() {
+  public void opdaterSynligtOrd() {
     synligtOrd = "";
     spilletErVundet = true;
     for (int n = 0; n < ordet.length(); n++) {
@@ -124,27 +129,27 @@ public class Galgelogik {
   }
 
 
-  public static String hentUrl(String url) throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
-    StringBuilder sb = new StringBuilder();
-    String linje = br.readLine();
-    while (linje != null) {
-      sb.append(linje + "\n");
-      linje = br.readLine();
-    }
-    return sb.toString();
-  }
+//  public static String hentUrl(String url) throws IOException {
+//    BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
+//    StringBuilder sb = new StringBuilder();
+//    String linje = br.readLine();
+//    while (linje != null) {
+//      sb.append(linje + "\n");
+//      linje = br.readLine();
+//    }
+//    return sb.toString();
+//  }
 
-  public void hentOrdFraDr() throws Exception {
-    String data = hentUrl("http://dr.dk");
-    System.out.println("data = " + data);
-
-    data = data.replaceAll("<.+?>", " ").toLowerCase().replaceAll("[^a-zæøå]", " ");
-    System.out.println("data = " + data);
-    muligeOrd.clear();
-    muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
-
-    System.out.println("muligeOrd = " + muligeOrd);
-    nulstil();
-  }
+//  public void hentOrdFraDr() throws Exception {
+//    String data = hentUrl("http://dr.dk");
+//    System.out.println("data = " + data);
+//
+//    data = data.replaceAll("<.+?>", " ").toLowerCase().replaceAll("[^a-zæøå]", " ");
+//    System.out.println("data = " + data);
+//    muligeOrd.clear();
+//    muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
+//
+//    System.out.println("muligeOrd = " + muligeOrd);
+//    nulstil();
+//  }
 }
